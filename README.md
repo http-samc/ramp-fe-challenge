@@ -135,6 +135,10 @@ I identified and handled the separate case in the `InputSelect`'s `onChange` han
 
 **Actual:** New transactions replace initial transactions, losing initial transactions
 
+## Solution
+
+I updated the `setPaginatedTransactions` invocation in the `fetchAll` function so that, after fetching the newest batch of transactions, the `paginatedTransactions` maintain the previous state with the newest batch of transactions appended. This doesn't increase the cache size but still allows us to chain multiple "View More" usages while preserving previous state.
+
 # Bug 5: Employees filter not available during loading more data
 
 _This bug has 2 wrong behaviors that will be fixed with the same solution_
