@@ -167,6 +167,12 @@ _This bug has 2 wrong behaviors that will be fixed with the same solution_
 
 **Actual:** The employees filter shows "Loading employees..." after clicking **View more** until new transactions are loaded.
 
+## Solution
+
+The loading of the `InputSelect` component was handled by the `isLoading` state. This state was initially set to true, then after the list of employees **and** the paginated transactions were fetched, it was set to false. The transactions query was blocking here, causing the loading state for the employee selector to drag on unnecessarily after the query it depended on was resolved.
+
+To fix this, I first realized that `isLoading` was only used for the employee dropdown. So, I refactored the state to `isLoadingEmployees` (to prevent downstream confusion in case other developers planned to use the state to monitor the status of other queries) and called `setIsLoading(false)` after the employee utils were fetched (but before the transactions query was ran).
+
 # Bug 6: View more button not working as expected
 
 _This bug has 2 wrong behaviors that can be fixed with the same solution. It's acceptable to fix with separate solutions as well._
