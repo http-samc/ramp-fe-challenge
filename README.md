@@ -224,6 +224,10 @@ _You need to fix some of the previous bugs in order to reproduce_
 
 **Actual:** In steps 6 and 8, toggled transaction lost the value given in step 2. _(E.g. Social Media Ads Inc is checked again)_
 
+## Solution
+
+After mutating the transaction approval, the cache becomes out of sync with the data. `useCustomFetch` provides a `clearCache` function, but in order to preserve the valid portions of the cache, I instead used the `clearCacheByEndpoint` function to clear the `paginatedTransactions` and the `transactionsByEmployee` endpoints, which hadn't been updated with the latest change in the approval status. Next time these are queried, there will be a loading state as they will be refetched.
+
 ## Submission
 
 **IMPORTANT:** Before sharing your CodeSandbox, open the `email.txt` file and replace your email on the only line of the file. Don't use any prefix or suffix, just your email.

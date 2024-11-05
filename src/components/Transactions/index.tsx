@@ -5,7 +5,7 @@ import { TransactionPane } from "./TransactionPane"
 import { SetTransactionApprovalFunction, TransactionsComponent } from "./types"
 
 export const Transactions: TransactionsComponent = ({ transactions }) => {
-  const { fetchWithoutCache, loading } = useCustomFetch()
+  const { fetchWithoutCache, clearCacheByEndpoint, loading } = useCustomFetch()
 
   const setTransactionApproval = useCallback<SetTransactionApprovalFunction>(
     async ({ transactionId, newValue }) => {
@@ -13,8 +13,11 @@ export const Transactions: TransactionsComponent = ({ transactions }) => {
         transactionId,
         value: newValue,
       })
+
+      // Invalidate the cached requests that have the previous approval state in them
+      clearCacheByEndpoint(["paginatedTransactions", "transactionsByEmployee"])
     },
-    [fetchWithoutCache]
+    [clearCacheByEndpoint, fetchWithoutCache]
   )
 
   if (transactions === null) {
