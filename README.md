@@ -103,6 +103,10 @@ We don't have a real API for this challenge, so we added some utilities to simul
 
 **Actual:** Nothing happens
 
+## Solution
+
+The `label` component was used to render a custom checkbox state with CSS and is the intended click target, with the underlying `input` of `type="checkbox"` present for accessibility. I associated the `label` with the `input` via the `htmlFor` attribute, and now the default browser behavior recognizes clicks on the label as clicks on the `input`, triggering the `onChange` listener that updates the state.
+
 # Bug 3: Cannot select _All Employees_ after selecting an employee
 
 **How to reproduce:**
