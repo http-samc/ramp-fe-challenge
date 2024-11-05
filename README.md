@@ -120,6 +120,10 @@ The `label` component was used to render a custom checkbox state with CSS and is
 
 **Actual:** The page crashes
 
+## Solution
+
+I identified and handled the separate case in the `InputSelect`'s `onChange` handler when a new Employee was selected (newValue isn't null) but it had a falsy `id`, meaning the "All Employees" value was selected. In this case specifically, I invoked `loadAllTransactions`.
+
 # Bug 4: Clicking on View More button not showing correct data
 
 **How to reproduce:**

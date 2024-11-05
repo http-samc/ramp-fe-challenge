@@ -63,8 +63,12 @@ export function App() {
           onChange={async (newValue) => {
             if (newValue === null) {
               return
+            } else if (!newValue.id) {
+              // If there was an Employee selected (newValue isn't null), but
+              // the id is falsy, the "All Employees" option was selected.
+              await loadAllTransactions()
+              return
             }
-
             await loadTransactionsByEmployee(newValue.id)
           }}
         />
