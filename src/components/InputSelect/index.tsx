@@ -1,7 +1,7 @@
 import Downshift from "downshift"
-import { useCallback, useLayoutEffect, useRef, useState } from "react"
+import { useCallback, useState } from "react"
 import classNames from "classnames"
-import { DropdownPosition, GetDropdownPositionFn, InputSelectOnChange, InputSelectProps } from "./types"
+import { InputSelectOnChange, InputSelectProps } from "./types"
 
 export function InputSelect<TItem>({
   label,
@@ -13,10 +13,6 @@ export function InputSelect<TItem>({
   loadingLabel,
 }: InputSelectProps<TItem>) {
   const [selectedValue, setSelectedValue] = useState<TItem | null>(defaultValue ?? null)
-  const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>({
-    top: 0,
-    left: 0,
-  })
 
   const onChange = useCallback<InputSelectOnChange<TItem>>(
     (selectedItem) => {
@@ -108,23 +104,4 @@ export function InputSelect<TItem>({
       }}
     </Downshift>
   )
-}
-
-/**
- * @deprecated This helper was previously used to manually move
- * the options box for the dropdown via listening to state updates.
- * This behavior has since been moved to a more performant, pure-CSS
- * solution that requires less state management logic.
- */
-const getDropdownPosition: GetDropdownPositionFn = (target) => {
-  if (target instanceof Element) {
-    const { top, left } = target.getBoundingClientRect()
-    const { scrollY } = window
-    return {
-      top: scrollY + top + 63,
-      left,
-    }
-  }
-
-  return { top: 0, left: 0 }
 }

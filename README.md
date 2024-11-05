@@ -84,14 +84,9 @@ We don't have a real API for this challenge, so we added some utilities to simul
 
 ## Solution
 
-```
-/**
- * @deprecated This helper was previously used to manually move
- * the options box for the dropdown via listening to state updates.
- * This behavior has since been moved to a more performant, pure-CSS
- * solution that requires less state management logic.
- */
-```
+The previous implementation for handling the position of the options dropdown involved using state and lends itself to adding event listeners for scroll/resizing and updating the style attribute of the dropdown div to account for this.
+
+This Javascript-heavy implementation isn't nearly as performant as a pure-CSS one, which I went with. By setting the select input div's position to relative and having the dropdown (which is nested inside) to be absolute, I can simply offset it from the top by 100% and 0 on the left. This keeps it directly below the input and allows for the removal of all the state position-tracking logic/helpers for a clean, readable, and performant one-liner.
 
 # Bug 2: Approve checkbox not working
 
